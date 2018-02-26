@@ -1,0 +1,54 @@
+<project name="Sokoban" default="run" basedir=".">
+	<property name="src" location="code/src"/>
+	<property name="lib" location="code/lib"/>
+	<property name="bin" location="code/bin"/>
+	<property name="doc" location="code/doc"/>
+	<property name="tests" location="code/tests"/>
+	<property name="saves" location="code/saves"/>
+	<property name="imported" location="code/levels/imported"/>
+	<property name="generated" location="code/levels/generated"/>
+
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${bin}" includes="**/*"/>
+			<fileset dir="${doc}" includes="**/*"/>
+			<fileset dir="${saves}" includes="**/*"/>
+			<fileset dir="${imported}" includes="**/*"/>
+			<fileset dir="${generated}" includes="**/*"/>
+		</delete>
+	</target>
+
+	<target name="build">
+		<mkdir dir="${bin}"/>
+		<javac srcdir="${src}" destdir="${bin}" includeantruntime="false"/>
+	</target>
+
+	<target name="doc" depends="build">
+		<mkdir dir="${doc}"/>
+		<javadoc destdir="${doc}" sourcepath="${src}" packagenames="**" charset="UTF-8" encoding="UTF-8" docencoding="UTF-8"/>
+	</target>
+
+	<target name="run" depends="build">
+		<java classname="Sokoban" fork="yes" dir="${bin}" classpath="${bin}"/>
+	</target>
+
+	<target name="buildtest" depends="build">
+			<mkdir dir="${bin}"/>
+			<javac srcdir="${tests}" destdir="${bin}" classpath="${lib}/junit-4.12.jar" includeantruntime="false"/>
+		</target>
+
+	<target name="test" depends="buildtest">
+		<junit showoutput="yes" printsummary="yes" haltonfailure="false" fork="yes">
+			<classpath>
+				<pathelement path="${bin}"/>
+				<pathelement path="${lib}/junit-4.12.jar"/>
+				<pathelement path="${lib}/hamcrest-core-1.3.jar"/>
+			</classpath>
+			<batchtest>
+				<fileset dir="${bin}" includes="**/*Test.class"/>
+				<formatter usefile="false" type="plain"/>
+			</batchtest>
+		</junit>
+	</target>
+
+</project>
