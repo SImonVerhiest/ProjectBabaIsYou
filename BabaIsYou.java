@@ -111,6 +111,7 @@ public class BabaIsYou extends Application {
         scene_1 = new Scene(vbox_1, 500, 500, Color.BROWN);
         scene_2 = new Scene(vbox_2, 500, 500, Color.RED);
         
+        //test
 
        
         window.setScene(scene_1);
