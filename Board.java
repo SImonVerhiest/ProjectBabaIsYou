@@ -2,10 +2,11 @@ import java.io.*;
 
 public class Board{
 
-	public static void main(String[] args){
-		String niveau = args[0];	
-		Board jeu = new Board(niveau);	
-		
+	public static String [][] board;
+
+	public static void main(String[] args){	
+		Board jeu = new Board(args[0]);
+		//System.out.println(jeu.getElem(8,1));
 
 	}
 	//Constructor
@@ -18,6 +19,7 @@ public class Board{
 	}
 	// this will read the specified file
 	public static void loadLevel(String level) throws IOException{
+		
 		try{
 			File file = new File(level);
 			String lvlPath = file.getAbsolutePath();
@@ -31,7 +33,7 @@ public class Board{
 			
 			int column = Integer.parseInt(columnLength) + 1;
 			int row = Integer.parseInt(rowLength) + 1;
-			String [][]board = new String[column][row];
+			board = new String[column][row];
 
 			while((line= br.readLine()) != null){
 				String pos =line.substring(line.indexOf(" "));
@@ -46,26 +48,15 @@ public class Board{
 			}
 
 			fr.close();
-
-			int a= 0, b=0;
-		for(String sousTab[] : board){
-			a =0;
-			for(String str : sousTab)
-				{    
-				    System.out.println("La valeur du tableau à l'indice ["+a+"]["+b+"] est : " + board[a][b]);
-				    a++;
-				 }
-			b++;
 		
-		}
 		}
 		catch(IOException e){
 			System.out.println("No file found." +e.getMessage());
 		}
+	
 	}
 
 	public String getElem(int i, int j){
-		Board board = new Board(level_1);
 		return board[i][j];
 	}
 	
